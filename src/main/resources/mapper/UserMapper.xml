@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sailing.dao.UserMapper">
+  <resultMap id="BaseResultMap" type="com.sailing.entity.User">
+    <id column="uid" jdbcType="VARCHAR" property="uid" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="upassword" jdbcType="VARCHAR" property="upassword" />
+    <result column="uname" jdbcType="VARCHAR" property="uname" />
+    <result column="uage" jdbcType="INTEGER" property="uage" />
+    <result column="usex" jdbcType="VARCHAR" property="usex" />
+    <result column="uemail" jdbcType="VARCHAR" property="uemail" />
+    <result column="uphone" jdbcType="VARCHAR" property="uphone" />
+    <result column="uregistertime" jdbcType="TIMESTAMP" property="uregistertime" />
+    <result column="ustatus" jdbcType="TINYINT" property="ustatus" />
+    <result column="uvalidatecode" jdbcType="VARCHAR" property="uvalidatecode" />
+  </resultMap>
+ 
+  <select id="selectLogin"   resultMap="BaseResultMap">
+    select 
+    uid,username, upassword
+    from user
+    where 1=1 
+    and 
+    	username = #{username,jdbcType=VARCHAR} 
+    and 
+    	upassword=#{upassword,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="selectUser"   resultMap="BaseResultMap">
+    select 
+    uid,username 
+    from user
+    where 1=1 
+    and 
+    	username = #{username,jdbcType=VARCHAR} 
+  </select>
+  
+  <select id="selectUserCode"   resultMap="BaseResultMap">
+    select 
+    *
+    from user
+    where 1=1 
+    and 
+    	uvalidatecode = #{uvalidatecode,jdbcType=VARCHAR} 
+  </select>
+  <insert id="insertUser" parameterType="com.sailing.entity.User">
+    insert into user (`uid`, username, upassword, 
+      uname, uage, usex, 
+      uemail, uphone, uregistertime, 
+      ustatus, uvalidatecode)
+    values (#{uid,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, #{upassword,jdbcType=VARCHAR}, 
+      #{uname,jdbcType=VARCHAR}, #{uage,jdbcType=INTEGER}, #{usex,jdbcType=VARCHAR}, 
+      #{uemail,jdbcType=VARCHAR}, #{uphone,jdbcType=VARCHAR}, #{uregistertime,jdbcType=TIMESTAMP}, 
+      #{ustatus,jdbcType=TINYINT}, #{uvalidatecode,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.sailing.entity.User">
+    update user
+    <set>
+      <if test="username != null">
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="upassword != null">
+        upassword = #{upassword,jdbcType=VARCHAR},
+      </if>
+      <if test="uname != null">
+        uname = #{uname,jdbcType=VARCHAR},
+      </if>
+      <if test="uage != null">
+        uage = #{uage,jdbcType=INTEGER},
+      </if>
+      <if test="usex != null">
+        usex = #{usex,jdbcType=VARCHAR},
+      </if>
+      <if test="uemail != null">
+        uemail = #{uemail,jdbcType=VARCHAR},
+      </if>
+      <if test="uphone != null">
+        uphone = #{uphone,jdbcType=VARCHAR},
+      </if>
+      <if test="uregistertime != null">
+        uregistertime = #{uregistertime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ustatus != null">
+        ustatus = #{ustatus,jdbcType=TINYINT},
+      </if>
+      <if test="uvalidatecode != null">
+        uvalidatecode = #{uvalidatecode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where `uid` = #{uid,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sailing.dao.CarInfoMapper">
+	<resultMap id="BaseResultMap" type="com.sailing.entity.CarInfo">
+		<id column="car_id" jdbcType="VARCHAR" property="carId" />
+		<result column="brand" jdbcType="VARCHAR" property="brand" />
+		<result column="car_name" jdbcType="VARCHAR" property="carName" />
+		<result column="conf_name" jdbcType="VARCHAR" property="confName" />
+		<result column="level" jdbcType="VARCHAR" property="level" />
+		<result column="engine" jdbcType="VARCHAR" property="engine" />
+		<result column="gearbox" jdbcType="VARCHAR" property="gearbox" />
+		<result column="body_structure" jdbcType="VARCHAR" property="bodyStructure" />
+		<result column="size" jdbcType="VARCHAR" property="size" />
+		<result column="maximumspeed" jdbcType="VARCHAR" property="maximumspeed" />
+		<result column="cargo_volume" jdbcType="VARCHAR" property="cargoVolume" />
+		<result column="car_age" jdbcType="DOUBLE" property="carAge" />
+		<result column="car_mileage" jdbcType="DOUBLE" property="carMileage" />
+		<result column="car_damage" jdbcType="VARCHAR" property="carDamage" />
+		<result column="iseager" jdbcType="VARCHAR" property="iseager" />
+		<result column="price" jdbcType="DOUBLE" property="price" />
+		<result column="license_address" jdbcType="VARCHAR" property="licenseAddress" />
+		<result column="address" jdbcType="VARCHAR" property="address" />
+		<result column="islocked" jdbcType="VARCHAR" property="islocked" />
+		<result column="uid" jdbcType="VARCHAR" property="uid" />
+	</resultMap>
+	<select id="selectCarInfo" resultMap="BaseResultMap">
+		SELECT DISTINCT brand,car_name,gearbox,`level`
+		FROM car_info
+		GROUP BY car_name
+	</select>
+	
+	<select id="selectCarPage" resultMap="BaseResultMap">
+		SELECT DISTINCT brand,car_name,car_id,car_name,gearbox,`level`
+		FROM car_info
+		where 1=1
+		<if test="brand!=null">
+			brand like concat('%',#{brand},'%')
+		</if>
+		<if test="car_name!=null">
+			car_name like concat('%',#{car_name},'%')
+		</if>
+		<if test="gearbox!=null">
+			gearbox like concat('%',#{gearbox},'%')
+		</if>
+		<if test="level!=null">
+			press level concat('%',#{level},'%')
+		</if>
+
+	</select>
+
+</mapper>
